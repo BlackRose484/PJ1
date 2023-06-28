@@ -1,6 +1,6 @@
 <div class="mt-4">
   <div>
-    <a href="/me/trash/courses">Trash</a>
+    <a href="/me/stored/courses">DS Courses</a>
   </div>
     <table class="table">
   <thead>
@@ -19,8 +19,8 @@
       <td>{{this.videoId}}</td>
       <td>{{this.slug}}</td>
       <td>
-        <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-        <a href="#" lass="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{this._id}}">Xóa</a>
+        <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Restore</a>
+        <a href="#" lass="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{this._id}}">Xóa vĩnh viễn</a>
       </td>
     </tr>
     {{else}}
@@ -36,6 +36,7 @@
 </div>
 <!-- Button trigger modal -->
  <form name="check" method="POST"></form>
+ <form name="restore" method="POST"></form>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -61,14 +62,27 @@
     document.addEventListener('DOMContentLoaded',function(){
         var couresID;
         var delForm = document.forms['check']
+        var restoreForm = document.forms['restore']
         var btnDelete = document.getElementById('btn-delete');
+        var restoreBut = $('.btn-restore');
 
       $('#exampleModalCenter').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         couresID = button.data('id') // Extract info from data-* attributes
         console.log(couresID)});
+
+        //Delete
         btnDelete.onclick = function(){
-        delForm.action = "/courses/"+couresID+"?_method=DELETE";
+        delForm.action = "/courses/"+couresID+"/force/?_method=DELETE";
         delForm.submit()}
+
+        //Restore
+        restoreBut.click(function(e)
+        {
+            e.preventDefault();
+            var couresID = $(this).data('id');
+            restoreForm.action = "/courses/"+couresID+"/restore/?_method=PATCH";
+            restoreForm.submit();
+        })
 })
 </script>

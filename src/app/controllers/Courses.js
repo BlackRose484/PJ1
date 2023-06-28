@@ -32,6 +32,16 @@ class CoursesController {
       .catch(next);
   }
   destroy(req, res, next) {
+    Courses.delete({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next);
+  }
+  restore(req, res, next) {
+    Courses.restore({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next);
+  }
+  destroyF(req, res, next) {
     Courses.deleteOne({ _id: req.params.id })
       .then(() => res.redirect('back'))
       .catch(next);
