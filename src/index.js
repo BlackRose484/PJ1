@@ -2,10 +2,15 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars').engine;
 const morgan = require('morgan');
+const methodOverride = require('method-override');
+const db = require('./config/db');
 const app = express();
 const port = 4000;
 
 const route = require('./routes');
+
+app.use(methodOverride('_method'));
+db.connect();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
@@ -21,6 +26,9 @@ app.engine(
   'hbs',
   exphbs({
     extname: '.hbs',
+    helpers: {
+      sum: (a, b) => a + b,
+    },
   }),
 );
 app.set('view engine', 'hbs');

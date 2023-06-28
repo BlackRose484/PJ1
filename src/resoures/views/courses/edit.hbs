@@ -1,0 +1,17 @@
+<div class="mt-4">
+    <form method="POST" action="/courses/{{course._id}}?_method=PUT">
+    <div class="form-group">
+        <label for="name">Name of courses</label>
+        <input type="text" class="form-control"  value = {{course.name}} = "name"  placeholder="Enter name" name ="name">
+    </div>
+    <div class="form-group">
+        <label for="des">Des of courses</label>
+        <input type="text" class="form-control" value = {{course.des}} id = "des"  placeholder="Enter des" name ="des">
+    </div>
+    <div class="form-group">
+        <label for="videoId">Name of courses</label>
+        <input type="text" class="form-control" value = {{course.videoId}} id = "videoId"  placeholder="Enter Id" name ="videoId">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

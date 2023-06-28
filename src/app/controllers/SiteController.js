@@ -1,6 +1,13 @@
+const Courses = require('../models/Courses');
+//const {multi} = require('../../util/mongoose');
 class SiteController {
-  index(req, res) {
-    res.render('home');
+  index(req, res, next) {
+    Courses.find({})
+      .lean()
+      .then((courses) => {
+        res.render('home', { courses });
+      })
+      .catch(next);
   }
   search(req, res) {
     res.render('search');

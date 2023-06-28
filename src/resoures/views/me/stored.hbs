@@ -1,0 +1,64 @@
+<div class="mt-4">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each courses}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.videoId}}</td>
+      <td>{{this.slug}}</td>
+      <td>
+        <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+        <a href="#" lass="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{this._id}}">Xóa</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+<!-- Button trigger modal -->
+ <form name="check" method="POST"></form>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to delete???
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+        <button id = "btn-delete" type="button" class="btn btn-danger">YES</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var couresID;
+        var delForm = document.forms['check']
+        var btnDelete = document.getElementById('btn-delete');
+
+      $('#exampleModalCenter').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        couresID = button.data('id') // Extract info from data-* attributes
+        console.log(couresID)});
+        btnDelete.onclick = function(){
+        delForm.action = "/courses/"+couresID+"?_method=DELETE";
+        delForm.submit()}
+})
+</script>
